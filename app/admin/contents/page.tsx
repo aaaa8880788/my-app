@@ -143,7 +143,7 @@ export default function ContentManagementPage() {
             type="link"
             icon={<EditOutlined />}
             onClick={() => showEditModal(record)}
-            className="mr-2"
+
           >
             编辑
           </Button>
@@ -171,8 +171,8 @@ export default function ContentManagementPage() {
       <div className="page-header">
         <h1 className="page-title">内容管理</h1>
         <div className="action-button">
-          <div className="flex gap-2">
-          <Button
+            <div className="flex gap-2">
+            <Button
             type="primary"
             icon={<PlusOutlined />}
             onClick={showAddModal}

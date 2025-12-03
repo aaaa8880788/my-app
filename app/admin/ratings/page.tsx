@@ -103,7 +103,7 @@ export default function RatingManagementPage() {
     {      title: '用户信息',
       key: 'user',
       render: (_: any, record: EnhancedRating) => (
-        <div className="text-sm">
+        <div>
           <div><strong>用户ID:</strong> {record.user?.id || '-'}</div>
           <div><strong>用户名:</strong> {record.user?.username || '-'}</div>
         </div>
@@ -112,7 +112,7 @@ export default function RatingManagementPage() {
     {      title: '评分内容',
       key: 'content',
       render: (_: any, record: EnhancedRating) => (
-        <div className="text-sm">
+        <div>
           <div><strong>内容ID:</strong> {record.content?.id || '-'}</div>
           <div><strong>标题:</strong> {record.content?.title || '-'}</div>
           <div><Text type="secondary" ellipsis style={{ maxWidth: 300 }}>
@@ -127,7 +127,7 @@ export default function RatingManagementPage() {
       key: 'score',
       width: 100,
       render: (score) => (
-        <span className="text-lg font-semibold">{score}</span>
+        <span className="font-semibold">{score}</span>
       ),
     },
     {
@@ -190,25 +190,25 @@ export default function RatingManagementPage() {
         size="middle"
         expandable={{
           expandedRowRender: (record) => (
-            <div className="p-3 sm:p-4 bg-gray-50">
-              <h3 className="font-semibold mb-2 text-base">评分详情</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="p-3">
+              <h3 className="font-semibold mb-2">评分详情</h3>
+              <div className="grid">
                 <div>
-                  <p className="text-sm"><strong>用户信息:</strong></p>
-                  <p className="text-sm">ID: {record.user?.id || '-'}</p>
-                  <p className="text-sm">用户名: {record.user?.username || '-'}</p>
+                  <p><strong>用户信息:</strong></p>
+                  <p>ID: {record.user?.id || '-'}</p>
+                  <p>用户名: {record.user?.username || '-'}</p>
                 </div>
                 <div>
-                  <p className="text-sm"><strong>评分内容:</strong></p>
-                  <p className="text-sm">ID: {record.content?.id || '-'}</p>
-                  <p className="text-sm">标题: {record.content?.title || '-'}</p>
-                  <p className="text-sm">描述: {record.content?.description || '-'}</p>
+                  <p><strong>评分内容:</strong></p>
+                  <p>ID: {record.content?.id || '-'}</p>
+                  <p>标题: {record.content?.title || '-'}</p>
+                  <p>描述: {record.content?.description || '-'}</p>
                 </div>
               </div>
-              <div className="mt-3 sm:mt-4">
-                <p className="text-sm"><strong>评分值:</strong> {record.score}</p>
-                <p className="text-sm"><strong>状态:</strong> {getStatusText(record.status)}</p>
-                <p className="text-sm"><strong>创建时间:</strong> {record.createdAt}</p>
+              <div className="mt-3">
+                <p><strong>评分值:</strong> {record.score}</p>
+                <p><strong>状态:</strong> {getStatusText(record.status)}</p>
+                <p><strong>创建时间:</strong> {record.createdAt}</p>
               </div>
             </div>
           ),

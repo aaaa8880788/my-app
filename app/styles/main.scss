@@ -1,6 +1,5 @@
 // 主SCSS文件，导入所有其他SCSS文件
 @import './variables';
 @import './globals';
-@import './front-home';
-@import './rate-form';
-@import './admin';
+@import './front/index';
+@import './admin/index';

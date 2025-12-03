@@ -1,0 +1,93 @@
+// RatingCard 组件样式
+.rating-card {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 25rem;
+}
+
+.card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1.5rem;
+  border-radius: 50%;
+  background: var(--primary-light);
+  color: var(--primary);
+
+  .anticon {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+.card-title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  font-weight: bold;
+}
+
+.card-description {
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+  max-width: 25rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  font-size: var(--font-size-base);
+}
+
+.card-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: 0 0.25rem 0.875rem 0 rgba(0, 0, 0, 0.1);
+  
+  @media (min-width: 768px) {
+    padding: 0.75rem 2.5rem;
+    font-size: var(--font-size-lg);
+  }
+  
+  &:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// 淡入动画效果
+.fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

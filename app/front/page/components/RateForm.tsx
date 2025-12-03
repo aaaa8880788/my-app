@@ -15,7 +15,7 @@ const ratingDimensions = [
 // 模拟评分内容数据
 const mockContentData = [
   { id: 1, content: '服务态度', icon: '😊' },
-  // { id: 2, content: '环境整洁', icon: '🏢' },
+  { id: 2, content: '环境整洁', icon: '🏢' },
   // { id: 3, content: '响应速度', icon: '⚡' },
   // { id: 4, content: '专业程度', icon: '💼' },
   // { id: 5, content: '总体满意度', icon: '🌟' },
@@ -238,10 +238,10 @@ export default function RateForm({backButtonClick}:RateFormProps) {
                         key={item.id} 
                         className="stat-item"
                       >
-                        <div className="stat-item-content">
-                          <Text className="text-text-primary">{item.content}</Text>
+                        <div className="stat-item-header">
+                          <Text className="stat-item-name">{item.content}</Text>
                         </div>
-                        <div className="stat-item-dimensions">
+                        <div className="stat-item-info">
                           {ratingDimensions.map(dimension => {
                             const dimScore = itemRatings[dimension.id];
                             const dimLevel = dimScore !== undefined ? getScoreLevel(dimScore) : null;
@@ -250,17 +250,9 @@ export default function RateForm({backButtonClick}:RateFormProps) {
                                 key={dimension.id} 
                                 className="stat-item-dimension"
                               >
-                                <Text className="stat-dimension-name" style={{ color: dimension.color }}>
-                                  {dimension.name}
-                                </Text>
-                                <div 
-                                  className="stat-dimension-score"
-                                  style={{ 
-                                    backgroundColor: dimScore ? dimLevel?.color : 'var(--border)',
-                                    borderColor: dimension.color
-                                  }}
-                                >
-                                  {dimScore}
+                                <div className="dimension-item">
+                                  <Text className="dimension-item-label">{dimension.name}</Text>
+                                  <Text className="dimension-item-value" style={{ color: dimension.color }}>{dimScore}</Text>
                                 </div>
                               </div>
                             );
@@ -287,7 +279,7 @@ export default function RateForm({backButtonClick}:RateFormProps) {
                             <div className="overview-card-header">
                               <Text className="text-text-primary">{item.content}</Text>
                               <div className="overview-card-count">
-                                {Object.values(stats)[0]?.count || 0}人已评价
+                                {Object.values(stats)[0]?.count || 0}人已评分
                               </div>
                             </div>
                             
@@ -301,38 +293,21 @@ export default function RateForm({backButtonClick}:RateFormProps) {
                                     <div className="dimension-stat-header">
                                       <Text className="dimension-stat-name">{dimension.name}</Text>
                                     </div>
-                                    
                                     <div className="dimension-stat-info">
-                                      <div className="dimension-average">
-                                        <Text className="stat-label">平均分</Text>
-                                        <Text className="stat-value" style={{ color: dimension.color }}>
-                                          {dimStat.average.toFixed(1)}
-                                        </Text>
-                                        <div className="stat-level" style={{ backgroundColor: `${level.color}20`, color: level.color }}>
-                                          {level.text}
-                                        </div>
-                                      </div>
-                                      
                                       <div className="dimension-range">
                                         <div className="range-item">
-                                          <Text className="stat-label">最低</Text>
+                                          <Text className="stat-label">平均分</Text>
+                                          <Text className="stat-value" style={{ color: dimension.color }}>{dimStat.average.toFixed(1)}</Text>
+                                        </div>
+                                        <div className="range-item">
+                                          <Text className="stat-label">最低分</Text>
                                           <Text className="stat-value" style={{ color: dimension.color }}>{dimStat.lowest}</Text>
                                         </div>
                                         <div className="range-item">
-                                          <Text className="stat-label">最高</Text>
+                                          <Text className="stat-label">最高分</Text>
                                           <Text className="stat-value" style={{ color: dimension.color }}>{dimStat.highest}</Text>
                                         </div>
                                       </div>
-                                    </div>
-                                    
-                                    <div className="progress-bar">
-                                      <div 
-                                        className="progress-fill"
-                                        style={{ 
-                                          width: `${dimStat.average}%`,
-                                          backgroundColor: dimension.color 
-                                        }}
-                                      />
                                     </div>
                                   </div>
                                 );

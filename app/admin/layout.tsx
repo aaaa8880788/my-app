@@ -1,11 +1,12 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { Layout, Menu, Button } from 'antd';
-import { UserOutlined, FileTextOutlined, StarOutlined, BarChartOutlined, MenuOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { Layout, Menu, Typography } from 'antd';
+import { UserOutlined, FileTextOutlined, StarOutlined, BarChartOutlined } from '@ant-design/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import type { MenuProps } from 'antd';
 
 const { Sider, Content } = Layout;
+const { Title } = Typography;
 
 // 定义菜单项
 const menuItems: MenuProps['items'] = [
@@ -33,28 +34,9 @@ const menuItems: MenuProps['items'] = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
-  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  
-  // 监听窗口大小变化，在小屏幕上自动收起侧边栏
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setCollapsed(true);
-      } else {
-        setCollapsed(false);
-      }
-    };
-    
-    // 初始化
-    handleResize();
-    // 监听窗口大小变化
-    window.addEventListener('resize', handleResize);
-    // 清理函数
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  
+
   // 获取当前激活的菜单项
   const getActiveKey = () => {
     const parts = pathname.split('/');
@@ -67,45 +49,114 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      {/* 移动端菜单按钮 */}
-      <div className="md:hidden fixed top-4 left-4 z-50">
-        <Button
-          type="text"
-          icon={<MenuOutlined />}
-          onClick={() => setMobileMenuVisible(!mobileMenuVisible)}
-          size="large"
-          style={{ background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
-        />
-      </div>
-      
+    <Layout style={{ minHeight: '100vh', background: '#f0f2f5' }}>
+      {/* 侧边栏导航 - PC专用 */}
       <Sider
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
-        width={240}
+        width={260}
         theme="light"
-        breakpoint="lg"
-        collapsedWidth="80"
-        style={{ transition: 'all 0.3s' }}
-        className={mobileMenuVisible ? 'block' : 'hidden md:block'}
+        style={{ 
+          background: '#fff', 
+          boxShadow: '2px 0 8px rgba(0, 0, 0, 0.05)',
+          position: 'fixed',
+          height: '100vh',
+          left: 0,
+          top: 0,
+          zIndex: 10,
+          transition: 'all 0.3s'
+        }}
       >
-        <div className={`flex items-center justify-center h-16 border-b transition-all duration-300 ${collapsed ? 'justify-center' : 'justify-center'}`}>
-          <h1 className={`font-bold transition-all duration-300 ${collapsed ? 'text-lg' : 'text-xl'}`}>
-            {collapsed ? '管理' : '管理系统'}
-          </h1>
-        </div>
+        {/* 侧边栏头部 */}
+        <div 
+            style={{ 
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '80px',
+              padding: '0 16px',
+              transition: 'all 0.3s',
+              background: '#fff',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+              borderBottom: 'none'
+            }}
+          >
+            <div 
+              style={{ 
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                transition: 'all 0.3s'
+              }}
+            >
+              <div 
+                style={{ 
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: collapsed ? 0 : '32px',
+                  height: collapsed ? 0 : '32px',
+                  borderRadius: '50%',
+                  backgroundColor: '#fff',
+                  transition: 'all 0.3s',
+                  opacity: collapsed ? 0 : 1
+                }}
+              >
+                <StarOutlined 
+                  style={{ 
+                    color: 'var(--primary)',
+                    fontSize: '20px'
+                  }} 
+                />
+              </div>
+              
+              <Title 
+                level={3} 
+                style={{ 
+                  margin: 0,
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease-in-out',
+                  color: '#333',
+                  fontSize: collapsed ? '16px' : '24px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}
+              >
+                {collapsed ? '评分系统' : '评分管理系统'}
+              </Title>
+            </div>
+          </div>
+        
+        {/* 菜单列表 */}
         <Menu
           mode="inline"
           selectedKeys={[getActiveKey()]}
           onClick={handleMenuClick}
           items={menuItems}
-          style={{ height: 'calc(100vh - 4rem)', borderRight: 0 }}
+          style={{ 
+            height: 'calc(100vh - 80px)', 
+            borderRight: 0,
+            background: '#fff'
+          }}
         />
       </Sider>
-      <Layout>
-        <Content className="p-4 sm:p-6 lg:p-8 transition-all duration-300">
-          {children}
+      
+      {/* 主内容区域 */}
+      <Layout style={{ marginLeft: collapsed ? 80 : 260, transition: 'all 0.3s' }}>
+        <Content 
+          style={{ 
+            minHeight: '100vh', 
+            padding: '24px 32px',
+            background: '#f0f2f5',
+            transition: 'all 0.3s'
+          }}
+        >
+          {/* 内容容器 */}
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            {children}
+          </div>
         </Content>
       </Layout>
     </Layout>

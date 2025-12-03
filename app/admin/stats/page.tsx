@@ -283,9 +283,9 @@ export default function AdminStatsPage() {
   };
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">统计展示</h1>
+    <div className="admin-page">
+      <div className="page-header">
+        <h1 className="page-title">统计展示</h1>
       </div>
 
       <Spin spinning={loading} tip="数据加载中...">
@@ -339,23 +339,23 @@ export default function AdminStatsPage() {
                 <table className="w-full text-left">
                   <thead>
                     <tr className="border-b">
-                      <th className="p-2 sm:p-3 text-xs sm:text-sm">内容ID</th>
-                      <th className="p-2 sm:p-3 text-xs sm:text-sm">内容标题</th>
-                      <th className="p-2 sm:p-3 text-xs sm:text-sm">评分人数</th>
-                      <th className="p-2 sm:p-3 text-xs sm:text-sm">最高分</th>
-                      <th className="p-2 sm:p-3 text-xs sm:text-sm">最低分</th>
-                      <th className="p-2 sm:p-3 text-xs sm:text-sm">平均分</th>
+                      <th className="p-2">内容ID</th>
+                      <th className="p-2">内容标题</th>
+                      <th className="p-2">评分人数</th>
+                      <th className="p-2">最高分</th>
+                      <th className="p-2">最低分</th>
+                      <th className="p-2">平均分</th>
                     </tr>
                   </thead>
                   <tbody>
                     {contentStats.map(stat => (
-                      <tr key={stat.contentId} className="border-b hover:bg-gray-50">
-                        <td className="p-2 sm:p-3 text-sm">{stat.contentId}</td>
-                        <td className="p-2 sm:p-3 text-sm font-medium">{stat.contentTitle}</td>
-                        <td className="p-2 sm:p-3 text-sm">{stat.totalRatings}</td>
-                        <td className="p-2 sm:p-3 text-sm text-green-600 font-semibold">{stat.maxScore}</td>
-                        <td className="p-2 sm:p-3 text-sm text-red-600 font-semibold">{stat.minScore}</td>
-                        <td className="p-2 sm:p-3 text-sm text-blue-600 font-semibold">{stat.avgScore.toFixed(1)}</td>
+                      <tr key={stat.contentId} className="border-b hover-bg-gray-50">
+                        <td className="p-2 text-sm">{stat.contentId}</td>
+                        <td className="p-2 text-sm font-semibold">{stat.contentTitle}</td>
+                        <td className="p-2 text-sm">{stat.totalRatings}</td>
+                        <td className="p-2 text-sm text-green-600 font-semibold">{stat.maxScore}</td>
+                        <td className="p-2 text-sm text-red-600 font-semibold">{stat.minScore}</td>
+                        <td className="p-2 text-sm text-blue-600 font-semibold">{stat.avgScore.toFixed(1)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -383,9 +383,9 @@ export default function AdminStatsPage() {
           </Col>
           <Col xs={24} lg={12}>
             <Card title="系统概况" className="h-full" size="small">
-              <div className="p-3 sm:p-4">
-                <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">评分系统运行状态</h3>
-                <div className="space-y-3 sm:space-y-4">
+              <div className="p-3">
+                <h3 className="text-base font-semibold mb-3">评分系统运行状态</h3>
+                <div className="space-y-3">
                   <div>
                     <div className="flex justify-between mb-1 text-sm">
                       <span>用户活跃度</span>

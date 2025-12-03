@@ -235,7 +235,7 @@ export default function UserManagementPage() {
           className="qrcode-modal"
         >
         {selectedUser && (
-          <div className="flex flex-col items-center py-4 px-4">
+          <div>
             <div className="qrcode-container">
             <QRCodeCanvas
               value={generateQrCodeUrl(selectedUser.id)}
@@ -247,7 +247,7 @@ export default function UserManagementPage() {
             <div className="qrcode-info">使用手机扫描登录</div>
             <div className="qrcode-user">用户: {selectedUser.username}</div>
             </div>
-            <p className="mt-4 text-center text-sm sm:text-base">扫描二维码登录系统</p>
+            <p>扫描二维码登录系统</p>
           </div>
         )}
       </Modal>
