@@ -1,0 +1,156 @@
+// 首页样式
+
+.front-home {
+  width: 450px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+  
+  .front-home-container {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .front-home-container-wrapper {
+    height: calc(100% - 32px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    background: var(--background);
+    overflow: auto;
+  }
+
+  .front-home-container-footer {
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+  
+  .card-content {
+    text-align: center;
+    padding: 32px 16px;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+  }
+  
+  .card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 24px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: var(--primary);
+  
+    
+    .anticon {
+      font-size: 32px;
+    }
+  }
+  
+  .card-title {
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+    font-weight: bold;
+  }
+  
+  .card-description {
+    margin-bottom: 32px;
+    color: var(--text-secondary);
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  
+  .card-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1);
+    
+    @media (min-width: 768px) {
+      padding: 12px 40px;
+      font-size: 18px;
+    }
+    
+    &:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  // 淡入动画效果
+  .fade-in {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  // Tabs样式优化
+  .ant-tabs {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ant-tabs-nav {
+    margin-bottom: 0;
+  }
+  .ant-tabs-content-holder {
+    flex-grow: 1;
+    .ant-tabs-content, .ant-tabs-tabpane {
+      height: 100%;
+      overflow: auto;
+    }
+  }
+  
+  .ant-tabs-tab {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--primary);
+    font-weight: 600;
+  }
+  
+  .ant-tabs-ink-bar {
+    background: var(--primary);
+  }
+}

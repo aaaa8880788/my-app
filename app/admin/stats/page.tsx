@@ -88,6 +88,9 @@ export default function AdminStatsPage() {
       title: {
         text: '各内容平均分对比',
         left: 'center',
+        textStyle: {
+          fontSize: 16
+        }
       },
       tooltip: {
         trigger: 'axis',
@@ -104,7 +107,8 @@ export default function AdminStatsPage() {
         data: contentStats.map(stat => stat.contentTitle),
         axisLabel: {
           interval: 0,
-          rotate: 45,
+          rotate: window.innerWidth < 768 ? 90 : 45,
+          fontSize: window.innerWidth < 768 ? 10 : 12,
         },
       },
       yAxis: {
@@ -157,6 +161,9 @@ export default function AdminStatsPage() {
       title: {
         text: '各内容评分人数',
         left: 'center',
+        textStyle: {
+          fontSize: 16
+        }
       },
       tooltip: {
         trigger: 'axis',
@@ -173,7 +180,8 @@ export default function AdminStatsPage() {
         data: contentStats.map(stat => stat.contentTitle),
         axisLabel: {
           interval: 0,
-          rotate: 45,
+          rotate: window.innerWidth < 768 ? 90 : 45,
+          fontSize: window.innerWidth < 768 ? 10 : 12,
         },
       },
       yAxis: {
@@ -233,14 +241,19 @@ export default function AdminStatsPage() {
       title: {
         text: '整体评分分布',
         left: 'center',
+        textStyle: {
+          fontSize: 16
+        }
       },
       tooltip: {
         trigger: 'item',
         formatter: '{b}: {c} ({d}%)',
       },
       legend: {
-        orient: 'vertical',
-        left: 'left',
+        orient: window.innerWidth < 768 ? 'horizontal' : 'vertical',
+        left: 'center',
+        bottom: window.innerWidth < 768 ? 0 : undefined,
+        top: window.innerWidth < 768 ? undefined : 'middle',
       },
       series: [
         {
@@ -272,13 +285,13 @@ export default function AdminStatsPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">统计展示</h1>
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">统计展示</h1>
       </div>
 
       <Spin spinning={loading} tip="数据加载中...">
-        <Row gutter={[16, 16]} className="mb-6">
+        <Row gutter={[12, 12]} className="mb-6">
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card size="small">
               <Statistic
                 title="用户总数"
                 value={userStats.totalUsers}
@@ -288,7 +301,7 @@ export default function AdminStatsPage() {
             </Card>
           </Col>
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card size="small">
               <Statistic
                 title="活跃用户"
                 value={userStats.activeUsers}
@@ -298,7 +311,7 @@ export default function AdminStatsPage() {
             </Card>
           </Col>
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card size="small">
               <Statistic
                 title="评分内容数"
                 value={contentStats.length}
@@ -308,7 +321,7 @@ export default function AdminStatsPage() {
             </Card>
           </Col>
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card size="small">
               <Statistic
                 title="总评分次数"
                 value={contentStats.reduce((sum, stat) => sum + stat.totalRatings, 0)}
@@ -321,28 +334,28 @@ export default function AdminStatsPage() {
 
         <Row gutter={[16, 16]} className="mb-6">
           <Col span={24}>
-            <Card title="评分内容详细统计" extra={<PieChartOutlined />}>
+            <Card title="评分内容详细统计" extra={<PieChartOutlined />} size="small">
               <div className="overflow-x-auto">
                 <table className="w-full text-left">
                   <thead>
                     <tr className="border-b">
-                      <th className="p-3">内容ID</th>
-                      <th className="p-3">内容标题</th>
-                      <th className="p-3">评分人数</th>
-                      <th className="p-3">最高分</th>
-                      <th className="p-3">最低分</th>
-                      <th className="p-3">平均分</th>
+                      <th className="p-2 sm:p-3 text-xs sm:text-sm">内容ID</th>
+                      <th className="p-2 sm:p-3 text-xs sm:text-sm">内容标题</th>
+                      <th className="p-2 sm:p-3 text-xs sm:text-sm">评分人数</th>
+                      <th className="p-2 sm:p-3 text-xs sm:text-sm">最高分</th>
+                      <th className="p-2 sm:p-3 text-xs sm:text-sm">最低分</th>
+                      <th className="p-2 sm:p-3 text-xs sm:text-sm">平均分</th>
                     </tr>
                   </thead>
                   <tbody>
                     {contentStats.map(stat => (
                       <tr key={stat.contentId} className="border-b hover:bg-gray-50">
-                        <td className="p-3">{stat.contentId}</td>
-                        <td className="p-3 font-medium">{stat.contentTitle}</td>
-                        <td className="p-3">{stat.totalRatings}</td>
-                        <td className="p-3 text-green-600 font-semibold">{stat.maxScore}</td>
-                        <td className="p-3 text-red-600 font-semibold">{stat.minScore}</td>
-                        <td className="p-3 text-blue-600 font-semibold">{stat.avgScore.toFixed(1)}</td>
+                        <td className="p-2 sm:p-3 text-sm">{stat.contentId}</td>
+                        <td className="p-2 sm:p-3 text-sm font-medium">{stat.contentTitle}</td>
+                        <td className="p-2 sm:p-3 text-sm">{stat.totalRatings}</td>
+                        <td className="p-2 sm:p-3 text-sm text-green-600 font-semibold">{stat.maxScore}</td>
+                        <td className="p-2 sm:p-3 text-sm text-red-600 font-semibold">{stat.minScore}</td>
+                        <td className="p-2 sm:p-3 text-sm text-blue-600 font-semibold">{stat.avgScore.toFixed(1)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -354,27 +367,27 @@ export default function AdminStatsPage() {
 
         <Row gutter={[16, 16]}>
           <Col xs={24} lg={12}>
-            <Card title="平均分对比图表" className="h-full">
+            <Card title="平均分对比图表" className="h-full" size="small">
               <div id="avg-score-chart" style={{ height: 400 }}></div>
             </Card>
           </Col>
           <Col xs={24} lg={12}>
-            <Card title="评分人数统计" className="h-full">
-              <div id="ratings-count-chart" style={{ height: 400 }}></div>
+            <Card title="评分人数趋势" className="h-full" size="small">
+              <div id="rating-count-chart" style={{ height: 400 }}></div>
             </Card>
           </Col>
           <Col xs={24} lg={12}>
-            <Card title="整体评分分布" className="h-full">
-              <div id="score-distribution-chart" style={{ height: 400 }}></div>
+            <Card title="评分分布情况" className="h-full" size="small">
+              <div id="rating-distribution-chart" style={{ height: 400 }}></div>
             </Card>
           </Col>
           <Col xs={24} lg={12}>
-            <Card title="系统概况" className="h-full">
-              <div className="p-4">
-                <h3 className="text-lg font-semibold mb-4">评分系统运行状态</h3>
-                <div className="space-y-4">
+            <Card title="系统概况" className="h-full" size="small">
+              <div className="p-3 sm:p-4">
+                <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">评分系统运行状态</h3>
+                <div className="space-y-3 sm:space-y-4">
                   <div>
-                    <div className="flex justify-between mb-1">
+                    <div className="flex justify-between mb-1 text-sm">
                       <span>用户活跃度</span>
                       <span>{Math.round((userStats.activeUsers / userStats.totalUsers) * 100)}%</span>
                     </div>
@@ -386,7 +399,7 @@ export default function AdminStatsPage() {
                     </div>
                   </div>
                   <div>
-                    <div className="flex justify-between mb-1">
+                    <div className="flex justify-between mb-1 text-sm">
                       <span>内容完成率</span>
                       <span>85%</span>
                     </div>
@@ -395,7 +408,7 @@ export default function AdminStatsPage() {
                     </div>
                   </div>
                   <div>
-                    <div className="flex justify-between mb-1">
+                    <div className="flex justify-between mb-1 text-sm">
                       <span>平均评分满意度</span>
                       <span>83.6%</span>
                     </div>

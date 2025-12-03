@@ -140,46 +140,46 @@ export default function RatingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-light/30 to-background py-12">
-      <div className="container mx-auto max-w-4xl px-4">
-        <div className="flex justify-start mb-4">
-          <Button
-            icon={<ArrowLeftOutlined />}
-            onClick={() => router.push('/front/page')}
-            className="btn btn-secondary"
-            style={{ borderRadius: '8px' }}
-          >
-            返回首页
-          </Button>
-        </div>
-        <Title level={1} className="text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-          {showStats ? '评分统计' : '开始评分'}
-        </Title>
-        
-        <Card className="shadow-lg fade-in" style={{ borderRadius: '16px', overflow: 'hidden' }}>
+    <div className="rating-page">
+          <div className="back-button">
+            <Button
+              icon={<ArrowLeftOutlined />}
+              onClick={() => router.push('/front/page')}
+              className="btn btn-secondary"
+              style={{ borderRadius: '8px', minWidth: '100px', padding: '6px 12px' }}
+              size="middle"
+            >
+              返回首页
+            </Button>
+          </div>
+          <Title level={1} className="page-title">
+            {showStats ? '评分统计' : '开始评分'}
+          </Title>
+          
+          <Card className="card fade-in" style={{ borderRadius: '16px', overflow: 'hidden' }}>
           {showStats ? (
             // 评分统计内容
-            <div className="p-6">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary-light text-primary mb-4">
-                  <PieChartOutlined style={{ fontSize: '40px' }} />
+            <div className="stats-content">
+              <div className="stats-header">
+                <div className="icon-wrapper">
+                  <PieChartOutlined className="text-4xl sm:text-5xl" />
                 </div>
-                <Title level={3} className="mb-2 text-text-primary">您的评分详情</Title>
-                <Text className="text-text-secondary">感谢您的反馈，以下是您的评分结果</Text>
+                <Title level={3} className="mb-2 text-text-primary text-xl sm:text-2xl">您的评分详情</Title>
+                <Text className="text-text-secondary max-w-md mx-auto">感谢您的反馈，以下是您的评分结果</Text>
               </div>
               
-              <div className="space-y-4 mb-8">
+              <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                 {mockContentData.map(item => {
                   const score = ratings[item.id] || 0;
                   const level = getScoreLevel(score);
                   return (
                     <div 
                       key={item.id} 
-                      className="flex items-center p-4 rounded-lg transition-all duration-300 hover:bg-background"
+                      className="flex items-center p-3 sm:p-4 rounded-lg transition-all duration-300 hover:bg-background"
                       onMouseEnter={() => setHoveredItem(item.id)}
                       onMouseLeave={() => setHoveredItem(null)}
                     >
-                      <div className="w-12 h-12 rounded-full bg-primary-light flex items-center justify-center text-2xl mr-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary-light flex items-center justify-center text-xl sm:text-2xl mr-3 sm:mr-4">
                         {item.icon}
                       </div>
                       <div className="flex-1">
@@ -195,7 +195,7 @@ export default function RatingPage() {
                         </div>
                       </div>
                       <div 
-                        className="ml-4 px-3 py-1 rounded-full font-medium text-white"
+                        className="ml-3 sm:ml-4 px-2 sm:px-3 py-1 rounded-full font-medium text-white text-sm"
                         style={{ backgroundColor: score > 0 ? level.color : 'var(--border)' }}
                       >
                         {score}分
@@ -208,19 +208,19 @@ export default function RatingPage() {
               {getStats() && (
                 <div className="mt-8 p-6 bg-background rounded-xl shadow-sm">
                   <Title level={4} className="mb-6 text-text-primary">评分概览</Title>
-                  <div className="space-y-6">
+                  <div className="space-y-6 stats-overview">
                     {mockContentData.map(item => {
                       const stats = getStats()![item.id];
                       if (!stats) return null;
                       
                       return (
-                        <Card key={item.id} className="card fade-in" style={{ borderRadius: '12px', border: 'none' }}>
+                        <Card key={item.id} className="overview-card fade-in" style={{ borderRadius: '12px', border: 'none' }}>
                           <div className="flex items-center mb-4">
                             <div className="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center text-xl mr-3">
                               {item.icon}
                             </div>
                             <Text className="font-medium text-text-primary text-lg">{item.content}</Text>
-                            <div className="ml-auto px-3 py-1 rounded-full text-sm font-medium"
+                            <div className="ml-auto px-2 py-1 rounded-full text-xs sm:text-sm font-medium"
                               style={{ 
                                 backgroundColor: getScoreLevel(stats.average).color + '20',
                                 color: getScoreLevel(stats.average).color
@@ -229,41 +229,41 @@ export default function RatingPage() {
                               {stats.count}人评价
                             </div>
                           </div>
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-                            <div className="p-3 rounded-lg bg-primary-light/30">
-                              <div className="text-text-secondary text-sm mb-1">平均分</div>
-                              <div className="text-2xl font-bold text-primary">{stats.average.toFixed(1)}</div>
-                              <div className="mt-1 text-xs px-2 py-0.5 rounded-full inline-block" 
-                                style={{ 
-                                  backgroundColor: getScoreLevel(stats.average).color + '30',
-                                  color: getScoreLevel(stats.average).color
-                                }}
-                              >
-                                {getScoreLevel(stats.average).text}
-                              </div>
-                            </div>
-                            <div className="p-3 rounded-lg bg-success-light/30">
-                              <div className="text-text-secondary text-sm mb-1">最高分</div>
-                              <div className="text-2xl font-bold text-green-600">{stats.highest}</div>
-                              <div className="mt-1 text-xs px-2 py-0.5 rounded-full inline-block bg-success-light/50 text-success">
-                                优秀
-                              </div>
-                            </div>
-                            <div className="p-3 rounded-lg bg-warning-light/30">
-                              <div className="text-text-secondary text-sm mb-1">最低分</div>
-                              <div className="text-2xl font-bold" style={{ color: getScoreLevel(stats.lowest).color }}>
-                                {stats.lowest}
-                              </div>
-                              <div className="mt-1 text-xs px-2 py-0.5 rounded-full inline-block" 
-                                style={{ 
-                                  backgroundColor: getScoreLevel(stats.lowest).color + '30',
-                                  color: getScoreLevel(stats.lowest).color
-                                }}
-                              >
-                                {getScoreLevel(stats.lowest).text}
-                              </div>
-                            </div>
-                          </div>
+                          <div className="card-stats">
+              <div className="stat-box stat-average">
+                <div className="stat-label">平均分</div>
+                <div className="stat-value">{stats.average.toFixed(1)}</div>
+                <div className="stat-level" 
+                  style={{ 
+                    backgroundColor: getScoreLevel(stats.average).color + '30',
+                    color: getScoreLevel(stats.average).color
+                  }}
+                >
+                  {getScoreLevel(stats.average).text}
+                </div>
+              </div>
+              <div className="stat-box stat-highest">
+                <div className="stat-label">最高分</div>
+                <div className="stat-value stat-highest">{stats.highest}</div>
+                <div className="stat-level stat-level-highest">
+                  优秀
+                </div>
+              </div>
+              <div className="stat-box stat-lowest">
+                <div className="stat-label">最低分</div>
+                <div className="stat-value" style={{ color: getScoreLevel(stats.lowest).color }}>
+                  {stats.lowest}
+                </div>
+                <div className="stat-level" 
+                  style={{ 
+                    backgroundColor: getScoreLevel(stats.lowest).color + '30',
+                    color: getScoreLevel(stats.lowest).color
+                  }}
+                >
+                  {getScoreLevel(stats.lowest).text}
+                </div>
+              </div>
+            </div>
                         </Card>
                       );
                     })}
@@ -273,72 +273,69 @@ export default function RatingPage() {
             </div>
           ) : (
             // 评分表单内容
-            <div className="p-6">
-              <div className="text-center mb-8">
-                <Title level={3} className="mb-2 text-text-primary">请对以下内容进行评分</Title>
-                <Text className="text-text-secondary max-w-lg">
+            <div className="rate-form-content">
+              <div className="rate-form-header">
+                <Title level={3} className="mb-2 text-text-primary text-xl sm:text-2xl">请对以下内容进行评分</Title>
+                <Text className="text-text-secondary max-w-md mx-auto">
                   请为每项内容评分（0-100分），所有项目都需要填写
                 </Text>
               </div>
               
-              <div className="space-y-6">
+              <div className="rating-items">
                 {mockContentData.map(item => {
                   const score = ratings[item.id];
                   const level = score !== undefined ? getScoreLevel(score) : null;
                   return (
                     <div 
                       key={item.id} 
-                      className="p-4 rounded-lg transition-all duration-300 hover:bg-background border border-border"
+                      className="rating-item"
                     >
-                      <div className="flex items-center mb-3">
-                        <div className="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center text-xl mr-3">
+                      <div className="item-header">
+                        <div className="item-icon">
                           {item.icon}
                         </div>
                         <Text className="font-medium text-text-primary">{item.content}</Text>
                         {score !== undefined && (
                           <span 
-                            className="ml-auto px-2 py-1 rounded-full text-xs font-medium text-white"
-                            style={{ backgroundColor: level?.color }}
-                          >
-                            {level?.text}
-                          </span>
+                          className="item-level"
+                          style={{ backgroundColor: level?.color }}
+                        >
+                          {level?.text}
+                        </span>
                         )}
                       </div>
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                      <div className="item-content">
                         <Text className="text-text-secondary">分数：</Text>
-                        <div className="flex-1">
-                          <InputNumber
-                            min={0}
-                            max={100}
-                            value={ratings[item.id] || undefined}
-                            onChange={(value) => handleRatingChange(item.id, value)}
-                            className="w-full hover:shadow-md focus:shadow-lg transition-all duration-300 cursor-pointer"
-                            placeholder="请输入分数"
-                            style={{
-                              height: '48px',
-                              borderRadius: '12px',
-                              borderColor: score !== undefined ? level?.color : '#d9d9d9',
-                              fontSize: '16px',
-                              boxShadow: score !== undefined ? `0 0 0 2px ${level?.color}30` : 'none',
-                              width: '100%',
-                              minWidth: '180px',
-                              padding: '0 12px'
-                            }}
-                          />
-                        </div>
-                        {score !== undefined && (
-                          <div className="w-full sm:w-32">
-                            <div className="h-2 bg-background rounded-full overflow-hidden">
-                              <div 
-                                className="h-full rounded-full transition-all duration-500"
+                        <div className="item-input">
+                          <div className="input-number">
+                            <InputNumber
+                              min={0}
+                              max={100}
+                              value={ratings[item.id] || undefined}
+                              onChange={(value) => handleRatingChange(item.id, value)}
+                              className="w-full hover:shadow-md focus:shadow-lg transition-all duration-300 cursor-pointer"
+                              placeholder="请输入分数"
+                              style={{
+                                height: '44px',
+                                borderRadius: '10px',
+                                borderColor: score !== undefined ? level?.color : '#d9d9d9',
+                                fontSize: '14px',
+                                boxShadow: score !== undefined ? `0 0 0 2px ${level?.color}30` : 'none',
+                                width: '100%'
+                              }}
+                            />
+                          </div>
+                          {score !== undefined && (
+                            <div className="progress-bar">
+                              <div className="progress-fill"
                                 style={{ 
                                   width: `${score}%`,
                                   backgroundColor: level?.color || 'var(--border)'
                                 }}
                               />
                             </div>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </div>
                   );
@@ -348,14 +345,15 @@ export default function RatingPage() {
           )}
         </Card>
         
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
+        <div className="rate-buttons">
           {isSaved && showStats ? (
             <>
               <Button 
                 onClick={handleModify}
                 icon={<EditOutlined />}
                 className="btn btn-secondary"
-                style={{ minWidth: '120px' }}
+                style={{ minWidth: '100px', padding: '8px 16px' }}
+                size="middle"
               >
                 修改评分
               </Button>
@@ -364,7 +362,8 @@ export default function RatingPage() {
                 onClick={handleSubmit}
                 icon={<ArrowRightOutlined />}
                 className="btn btn-primary"
-                style={{ minWidth: '120px' }}
+                style={{ minWidth: '100px', padding: '8px 16px' }}
+                size="middle"
               >
                 提交评分
               </Button>
@@ -375,7 +374,8 @@ export default function RatingPage() {
               onClick={handleSave}
               icon={<SaveOutlined />}
               className="btn btn-primary"
-              style={{ minWidth: '150px' }}
+              style={{ minWidth: '120px', padding: '10px 20px' }}
+              size="middle"
               disabled={!isAllRated()}
             >
               保存评分
@@ -383,10 +383,9 @@ export default function RatingPage() {
           )}
         </div>
         
-        <div className="mt-12 text-center text-text-secondary text-sm">
+        <div className="page-footer">
           <Text>© {new Date().getFullYear()} 评分系统 - 让反馈更有价值</Text>
         </div>
-      </div>
     </div>
   );
 }

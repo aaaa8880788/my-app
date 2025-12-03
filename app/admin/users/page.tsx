@@ -124,11 +124,7 @@ export default function UserManagementPage() {
       dataIndex: 'createdAt',
       key: 'createdAt',
     },
-    {
-      title: '登录二维码',
-      key: 'qrcode',
-      width: 120,
-      render: (_, record) => (
+    {      title: '登录二维码',      key: 'qrcode',      width: 100,      render: (_: any, record: User) => (
         <div>
           <Button 
             type="link" 
@@ -144,11 +140,7 @@ export default function UserManagementPage() {
         </div>
       ),
     },
-    {
-      title: '操作',
-      key: 'action',
-      width: 150,
-      render: (_, record) => (
+    {      title: '操作',      key: 'action',      width: 200,      render: (_: any, record: User) => (
         <>
           <Button
             type="link"
@@ -178,31 +170,44 @@ export default function UserManagementPage() {
   ];
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">用户管理</h1>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={showAddModal}
-        >
+    <div className="admin-page">
+      <div className="page-header">
+        <h1 className="page-title">用户管理</h1>
+        <div className="action-button">
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={showAddModal}
+            size="middle"
+          >
           新增用户
         </Button>
+        </div>
       </div>
       
-      <Table
+      <div className="table-container">
+        <Table
         columns={columns}
         dataSource={users}
         rowKey="id"
-        pagination={{ pageSize: 10 }}
+        pagination={{ 
+          pageSize: 10, 
+          size: 'small',
+          showSizeChanger: true,
+          pageSizeOptions: ['5', '10', '20']
+        }}
         scroll={{ x: 'max-content' }}
+        size="middle"
       />
+      </div>
 
-      <Modal
+      <Modal className="modal"
         title={isEditMode ? '编辑用户' : '新增用户'}
         open={isModalOpen}
         onOk={handleSave}
         onCancel={handleCancel}
+        width={500}
+        centered
       >
         <Form
           form={form}
@@ -214,28 +219,35 @@ export default function UserManagementPage() {
             name="username"
             rules={[{ required: true, message: '请输入用户名' }]}
           >
-            <Input placeholder="请输入用户名" />
+            <Input placeholder="请输入用户名" size="large" />
           </Form.Item>
         </Form>
       </Modal>
 
       {/* 二维码模态框 */}
       <Modal
-        title="用户登录二维码"
-        open={qrcodeModalVisible}
-        onCancel={closeQrCodeModal}
-        footer={null}
-      >
+          title="用户登录二维码"
+          open={qrcodeModalVisible}
+          onCancel={closeQrCodeModal}
+          footer={null}
+          width={320}
+          centered
+          className="qrcode-modal"
+        >
         {selectedUser && (
-          <div className="flex flex-col items-center py-4">
+          <div className="flex flex-col items-center py-4 px-4">
+            <div className="qrcode-container">
             <QRCodeCanvas
               value={generateQrCodeUrl(selectedUser.id)}
-              size={200}
+              size={128}
               level="M"
               includeMargin
+              className="qrcode-image"
             />
-            <p className="mt-4 text-center">扫描二维码登录系统</p>
-            <p className="text-sm text-gray-500">用户: {selectedUser.username}</p>
+            <div className="qrcode-info">使用手机扫描登录</div>
+            <div className="qrcode-user">用户: {selectedUser.username}</div>
+            </div>
+            <p className="mt-4 text-center text-sm sm:text-base">扫描二维码登录系统</p>
           </div>
         )}
       </Modal>

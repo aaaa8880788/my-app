@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Table, Button, Modal, Form, Input, message, Popconfirm } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 
 // 定义评分内容类型
 interface Content {
@@ -106,6 +106,12 @@ export default function ContentManagementPage() {
     message.success('内容删除成功');
   };
 
+  // 批量上传
+  const handleUpload = () => {
+    // 实现批量上传逻辑
+    message.info('批量上传功能待实现');
+  };
+
   // 表格列定义
   const columns = [
     {
@@ -124,21 +130,14 @@ export default function ContentManagementPage() {
       title: '描述',
       dataIndex: 'description',
       key: 'description',
-      ellipsis: {
-        rows: 2,
-        expandable: true,
-      },
+      ellipsis: true,
     },
     {
       title: '创建时间',
       dataIndex: 'createdAt',
       key: 'createdAt',
     },
-    {
-      title: '操作',
-      key: 'action',
-      width: 150,
-      render: (_, record) => (
+    {      title: '操作',      key: 'action',      width: 150,      render: (_: any, record: Content) => (
         <>
           <Button
             type="link"
@@ -168,32 +167,55 @@ export default function ContentManagementPage() {
   ];
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">内容管理</h1>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={showAddModal}
-        >
-          新增内容
-        </Button>
+    <div className="admin-page">
+      <div className="page-header">
+        <h1 className="page-title">内容管理</h1>
+        <div className="action-button">
+          <div className="flex gap-2">
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={showAddModal}
+            size="middle"
+          >
+            新增内容
+          </Button>
+          <Button
+            type="primary"
+            icon={<UploadOutlined />}
+            onClick={handleUpload}
+            size="middle"
+            style={{ marginLeft: 10 }}
+          >
+            批量上传
+          </Button>
+          </div>
+        </div>
       </div>
       
-      <Table
+      <div className="table-container">
+        <Table
         columns={columns}
         dataSource={contents}
         rowKey="id"
-        pagination={{ pageSize: 10 }}
+        pagination={{ 
+          pageSize: 10, 
+          size: 'small',
+          showSizeChanger: true,
+          pageSizeOptions: ['5', '10', '20']
+        }}
         scroll={{ x: 'max-content' }}
+        size="middle"
       />
+      </div>
 
-      <Modal
+      <Modal className="modal"
         title={isEditMode ? '编辑内容' : '新增内容'}
         open={isModalOpen}
         onOk={handleSave}
         onCancel={handleCancel}
-        width={600}
+        width={{ xs: '90%', sm: 600 }}
+        centered
       >
         <Form
           form={form}
@@ -205,18 +227,19 @@ export default function ContentManagementPage() {
             name="title"
             rules={[{ required: true, message: '请输入内容标题' }]}
           >
-            <Input placeholder="请输入内容标题" />
+            <Input placeholder="请输入内容标题" size="large" />
           </Form.Item>
           <Form.Item
             label="描述"
             name="description"
             rules={[{ required: true, message: '请输入内容描述' }]}
           >
-            <Input.TextArea 
-              placeholder="请输入内容描述" 
+            <Input.TextArea
+              placeholder="请输入内容描述"
               rows={4}
               showCount
               maxLength={500}
+              size="large"
             />
           </Form.Item>
         </Form>

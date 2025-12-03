@@ -100,21 +100,19 @@ export default function RatingManagementPage() {
       key: 'id',
       width: 80,
     },
-    {
-      title: '用户信息',
+    {      title: '用户信息',
       key: 'user',
-      render: (_, record) => (
-        <div>
+      render: (_: any, record: EnhancedRating) => (
+        <div className="text-sm">
           <div><strong>用户ID:</strong> {record.user?.id || '-'}</div>
           <div><strong>用户名:</strong> {record.user?.username || '-'}</div>
         </div>
       ),
     },
-    {
-      title: '评分内容',
+    {      title: '评分内容',
       key: 'content',
-      render: (_, record) => (
-        <div>
+      render: (_: any, record: EnhancedRating) => (
+        <div className="text-sm">
           <div><strong>内容ID:</strong> {record.content?.id || '-'}</div>
           <div><strong>标题:</strong> {record.content?.title || '-'}</div>
           <div><Text type="secondary" ellipsis style={{ maxWidth: 300 }}>
@@ -152,7 +150,7 @@ export default function RatingManagementPage() {
       title: '操作',
       key: 'action',
       width: 100,
-      render: (_, record) => (
+      render: (_: any, record: EnhancedRating) => (
         <Popconfirm
           title="确定要删除这个评分记录吗？"
           onConfirm={() => handleDelete(record.id)}
@@ -172,43 +170,51 @@ export default function RatingManagementPage() {
   ];
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">评分管理</h1>
+    <div className="admin-page">
+      <div className="page-header">
+        <h1 className="page-title">评分管理</h1>
       </div>
       
-      <Table
+      <div className="table-container">
+        <Table
         columns={columns}
         dataSource={enhancedRatings}
         rowKey="id"
-        pagination={{ pageSize: 10 }}
+        pagination={{ 
+          pageSize: 10, 
+          size: 'small',
+          showSizeChanger: true,
+          pageSizeOptions: ['5', '10', '20']
+        }}
         scroll={{ x: 'max-content' }}
+        size="middle"
         expandable={{
           expandedRowRender: (record) => (
-            <div className="p-4 bg-gray-50">
-              <h3 className="font-semibold mb-2">评分详情</h3>
-              <div className="grid grid-cols-2 gap-4">
+            <div className="p-3 sm:p-4 bg-gray-50">
+              <h3 className="font-semibold mb-2 text-base">评分详情</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <p><strong>用户信息:</strong></p>
-                  <p>ID: {record.user?.id || '-'}</p>
-                  <p>用户名: {record.user?.username || '-'}</p>
+                  <p className="text-sm"><strong>用户信息:</strong></p>
+                  <p className="text-sm">ID: {record.user?.id || '-'}</p>
+                  <p className="text-sm">用户名: {record.user?.username || '-'}</p>
                 </div>
                 <div>
-                  <p><strong>评分内容:</strong></p>
-                  <p>ID: {record.content?.id || '-'}</p>
-                  <p>标题: {record.content?.title || '-'}</p>
-                  <p>描述: {record.content?.description || '-'}</p>
+                  <p className="text-sm"><strong>评分内容:</strong></p>
+                  <p className="text-sm">ID: {record.content?.id || '-'}</p>
+                  <p className="text-sm">标题: {record.content?.title || '-'}</p>
+                  <p className="text-sm">描述: {record.content?.description || '-'}</p>
                 </div>
               </div>
-              <div className="mt-4">
-                <p><strong>评分值:</strong> {record.score}</p>
-                <p><strong>状态:</strong> {getStatusText(record.status)}</p>
-                <p><strong>创建时间:</strong> {record.createdAt}</p>
+              <div className="mt-3 sm:mt-4">
+                <p className="text-sm"><strong>评分值:</strong> {record.score}</p>
+                <p className="text-sm"><strong>状态:</strong> {getStatusText(record.status)}</p>
+                <p className="text-sm"><strong>创建时间:</strong> {record.createdAt}</p>
               </div>
             </div>
           ),
         }}
       />
+      </div>
     </div>
   );
 }

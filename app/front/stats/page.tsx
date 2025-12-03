@@ -342,8 +342,8 @@ export default function StatsPage() {
       children: (
         <Card className="shadow-sm" style={{ borderRadius: '12px', border: 'none' }}>
           {/* 统计卡片 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            <Card className="card fade-in" style={{ borderRadius: '12px', border: 'none' }}>
+          <div className="stats-cards">
+            <Card className="card fade-in stat-card" style={{ borderRadius: '12px', border: 'none' }}>
               <Statistic
                 title="参与评分人数"
                 value={summaryData.maxRatedCount}
@@ -353,7 +353,7 @@ export default function StatsPage() {
                 suffix="人"
               />
             </Card>
-            <Card className="card fade-in" style={{ borderRadius: '12px', border: 'none' }}>
+            <Card className="card fade-in stat-card" style={{ borderRadius: '12px', border: 'none' }}>
               <Statistic
                 title="最高平均分"
                 value={summaryData.maxAverageScore}
@@ -363,7 +363,7 @@ export default function StatsPage() {
                 suffix="分"
               />
             </Card>
-            <Card className="card fade-in" style={{ borderRadius: '12px', border: 'none' }}>
+            <Card className="card fade-in stat-card" style={{ borderRadius: '12px', border: 'none' }}>
               <Statistic
                 title="总评分次数"
                 value={summaryData.totalRatedCount}
@@ -373,7 +373,7 @@ export default function StatsPage() {
                 suffix="次"
               />
             </Card>
-            <Card className="card fade-in" style={{ borderRadius: '12px', border: 'none' }}>
+            <Card className="card fade-in stat-card" style={{ borderRadius: '12px', border: 'none' }}>
               <Statistic
                 title="评分项目数"
                 value={summaryData.itemCount}
@@ -384,23 +384,25 @@ export default function StatsPage() {
           </div>
           
           {/* 总体平均分卡片 */}
-          <Card className="mb-10 fade-in" style={{ borderRadius: '12px', border: 'none', backgroundColor: 'rgba(24, 144, 255, 0.05)' }}>
-            <div className="text-center">
-              <Title level={4} style={{ margin: 0, color: 'var(--text-secondary)' }}>总体平均评分</Title>
-              <div className="mt-2">
-                <span className="text-5xl font-bold text-primary">{summaryData.overallAverage.toFixed(1)}</span>
-                <span className="text-xl text-text-secondary ml-2">分</span>
+          <div className="overall-average">
+            <Card className="card fade-in highlight-card" style={{ borderRadius: '12px', border: 'none', backgroundColor: 'rgba(24, 144, 255, 0.05)' }}>
+              <div className="card-content">
+                <Title level={4} style={{ margin: 0, color: 'var(--text-secondary)' }} className="average-title">总体平均评分</Title>
+                <div className="average-value">
+                  <span className="value">{summaryData.overallAverage.toFixed(1)}</span>
+                  <span className="unit">分</span>
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </div>
           
           {/* 图表区域 */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="charts-container">
             <div className="chart-container fade-in">
-              <div ref={avgChartRef} style={chartSize}></div>
+              <div ref={avgChartRef} className="chart" style={chartSize}></div>
             </div>
             <div className="chart-container fade-in">
-              <div ref={distChartRef} style={chartSize}></div>
+              <div ref={distChartRef} className="chart" style={chartSize}></div>
             </div>
           </div>
         </Card>
@@ -411,11 +413,11 @@ export default function StatsPage() {
       label: '详细数据',
       icon: <DatabaseOutlined />,
       children: (
-        <Card className="shadow-sm fade-in" style={{ borderRadius: '12px', border: 'none' }}>
-          <div className="overflow-x-auto">
-            <table className="table w-full border-collapse">
+        <Card className="card fade-in stats-card" style={{ borderRadius: '12px', border: 'none' }}>
+          <div className="table-container">
+            <table className="w-full border-collapse">
               <thead>
-                <tr className="bg-primary-light/20">
+                <tr>
                   <th className="p-4 text-left border border-primary-light/30">评分项目</th>
                   <th className="p-4 text-center border border-primary-light/30">已评分人数</th>
                   <th className="p-4 text-center border border-primary-light/30">最高分</th>
@@ -425,7 +427,7 @@ export default function StatsPage() {
               </thead>
               <tbody>
                 {mockStatsData.map((item, index) => (
-                  <tr key={item.id} className={`hover:bg-primary-light/10 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                  <tr key={item.id}>
                     <td className="p-4 border border-primary-light/30 font-medium">{item.content}</td>
                     <td className="p-4 text-center border border-primary-light/30">{item.ratedCount}</td>
                     <td className="p-4 text-center border border-primary-light/30 text-success">{item.highestScore}</td>
@@ -442,24 +444,24 @@ export default function StatsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-light/30 to-background py-12">
-      <div className="container mx-auto max-w-5xl px-4">
-        <div className="flex justify-start mb-4">
+    <div className="stats-page">
+        <div className="back-button">
           <Button
             icon={<ArrowLeftOutlined />}
             onClick={() => router.push('/front/page')}
             className="btn btn-secondary"
-            style={{ borderRadius: '8px' }}
+            style={{ borderRadius: '8px', minWidth: '100px', padding: '6px 12px' }}
+            size="middle"
           >
             返回首页
           </Button>
         </div>
-        <Title level={1} className="text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+        <Title level={1} className="text-center mb-6 sm:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary text-2xl sm:text-3xl lg:text-4xl">
           评分统计分析
         </Title>
         
         {loading ? (
-          <div className="flex justify-center items-center h-96">
+          <div className="loading-container">
             <Spin size="large" tip="加载统计数据中..." />
           </div>
         ) : (
@@ -468,35 +470,25 @@ export default function StatsPage() {
             onChange={setActiveTab}
             items={items}
             className="w-full"
+            size="middle"
             tabBarStyle={{
-              padding: '0 24px',
+              padding: '0 16px',
               borderBottom: '1px solid var(--border)',
               backgroundColor: 'transparent',
               marginBottom: '20px'
             }}
-            tabBarItemStyle={{
-              padding: '16px 0',
-              margin: '0 16px',
-              fontSize: '16px',
-              fontWeight: '500',
-              color: 'var(--text-secondary)',
-              '&.ant-tabs-tab-active': {
-                color: 'var(--primary)'
-              }
-            }}
           />
         )}
         
-        <div className="mt-12 text-center">
-          <div className="inline-flex items-center text-text-secondary text-sm">
+        <div className="page-info update-time">
+          <div className="inline-flex items-center text-text-secondary">
             <LineChartOutlined className="mr-2" /> 数据更新时间: {new Date().toLocaleDateString()}
           </div>
         </div>
         
-        <div className="mt-8 text-center text-text-secondary text-sm">
+        <div className="page-info">
           <Text>© {new Date().getFullYear()} 评分系统 - 让反馈更有价值</Text>
         </div>
-      </div>
     </div>
   );
 }

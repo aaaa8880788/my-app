@@ -35,49 +35,34 @@ const mockStats: StatsResponse = {
   ],
 };
 
-// 获取所有统计数据
-export async function GET() {
-  try {
-    return NextResponse.json({ success: true, data: mockStats }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: '获取统计数据失败' }, { status: 500 });
-  }
-}
-
-// 获取用户统计数据
+// 获取统计数据
 export async function GET(request: Request) {
-  const url = new URL(request.url);
-  if (url.pathname.endsWith('/stats/users')) {
-    try {
+  try {
+    const url = new URL(request.url);
+    const pathname = url.pathname;
+    
+    // 获取用户统计数据
+    if (pathname.endsWith('/stats/users')) {
       return NextResponse.json({ 
         success: true, 
         data: mockStats.userStats 
       }, { status: 200 });
-    } catch (error) {
-      return NextResponse.json({ 
-        success: false, 
-        message: '获取用户统计数据失败' 
-      }, { status: 500 });
     }
-  }
-  return NextResponse.json({ success: false, message: '路径不存在' }, { status: 404 });
-}
-
-// 获取内容统计数据
-export async function GET(request: Request) {
-  const url = new URL(request.url);
-  if (url.pathname.endsWith('/stats/contents')) {
-    try {
+    
+    // 获取内容统计数据
+    if (pathname.endsWith('/stats/contents')) {
       return NextResponse.json({ 
         success: true, 
         data: mockStats.contentStats 
       }, { status: 200 });
-    } catch (error) {
-      return NextResponse.json({ 
-        success: false, 
-        message: '获取内容统计数据失败' 
-      }, { status: 500 });
     }
+    
+    // 获取所有统计数据
+    return NextResponse.json({ success: true, data: mockStats }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ 
+      success: false, 
+      message: '获取统计数据失败' 
+    }, { status: 500 });
   }
-  return NextResponse.json({ success: false, message: '路径不存在' }, { status: 404 });
 }
