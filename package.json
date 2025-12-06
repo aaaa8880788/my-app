@@ -15,7 +15,7 @@
     "axios": "^1.13.2",
     "echarts": "^6.0.0",
     "jsonwebtoken": "^9.0.2",
-    "next": "16.0.6",
+    "next": "16.0.7",
     "pdfjs-dist": "4.8.69",
     "qrcode.react": "^4.2.0",
     "react": "19.2.0",
