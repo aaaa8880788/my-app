@@ -1,0 +1,69 @@
+.RatingTable {
+    .rated-users-list {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .rated-user-item {
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            padding: 5px;
+            background-color: #fafafa;
+
+            .user-info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .user-info-name {
+                    font-weight: bold;
+                    color: #1890ff;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    width: 180px;
+
+                    .score-tag {
+                        padding: 2px 6px;
+                        border-radius: 4px;
+                        font-weight: bold;
+                        color: white;
+                    }
+
+                    .highest-tag {
+                        background-color: #52c41a;
+                    }
+
+                    .lowest-tag {
+                        background-color: #ff4d4f;
+                    }
+                }
+
+                .user-info-score {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 180px;
+                }
+
+                .score-final {
+                    font-weight: bold;
+                    color: #ff7875;
+                }
+
+                .score-dimensions {
+                    display: flex;
+                    gap: 16px;
+                    flex-wrap: wrap;
+                }
+            }
+
+
+        }
+    }
+
+    .user-info-rating-item {
+        color: #888;
+    }
+}

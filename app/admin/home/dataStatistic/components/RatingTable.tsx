@@ -137,23 +137,8 @@ const RatingTable: React.FC<RatingTableProps> = ({ detailedRatings }) => {
       dataIndex: 'workName',
       key: 'workName',
       align: 'center',
-    },
-    {
-      title: '已评分用户数',
-      dataIndex: 'ratedUserCount',
-      key: 'ratedUserCount',
-      width: 150,
-      align: 'center',
-      sorter: (a, b) => a.ratedUserCount - b.ratedUserCount,
-    },
-    {
-      title: '平均分',
-      dataIndex: 'avgScore',
-      key: 'avgScore',
       width: 120,
-      align: 'center',
-      sorter: (a, b) => a.avgScore - b.avgScore,
-      render: (avgScore: number) => avgScore > 0 ? `${avgScore}分` : '暂无评分',
+      ellipsis: true,
     },
     {
       title: (
@@ -205,9 +190,9 @@ const RatingTable: React.FC<RatingTableProps> = ({ detailedRatings }) => {
                         ))}
                       </div>
                     </div>
-                    <div className="user-info-rating-tiem">
+                    {/* <div className="user-info-rating-item">
                       {new Date(user.createdAt).toLocaleString()}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               ))}
@@ -218,89 +203,37 @@ const RatingTable: React.FC<RatingTableProps> = ({ detailedRatings }) => {
         </div>
       ),
     },
+    {
+      title: '已评分用户数',
+      dataIndex: 'ratedUserCount',
+      key: 'ratedUserCount',
+      width: 150,
+      align: 'center',
+      sorter: (a, b) => a.ratedUserCount - b.ratedUserCount,
+    },
+    {
+      title: '平均分',
+      dataIndex: 'avgScore',
+      key: 'avgScore',
+      width: 100,
+      align: 'center',
+      sorter: (a, b) => a.avgScore - b.avgScore,
+      render: (avgScore: number) => avgScore > 0 ? `${avgScore}分` : '暂无评分',
+    },
   ];
 
   return (
     <Table
+      className="RatingTable"
       columns={columns}
       dataSource={workRatings}
       rowKey="workId"
       pagination={{ pageSize: 10 }}
       scroll={{ x: 800 }}
-      style={{ marginTop: 20 }}
     />
+    
   );
 };
-
-// 添加一些基本样式
-const styles = `
-.rated-users-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.rated-user-item {
-  border: 1px solid #e8e8e8;
-  border-radius: 6px;
-  padding: 12px;
-  background-color: #fafafa;
-}
-
-.user-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.user-info-name {
-  font-weight: bold;
-  color: #1890ff;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 180px;
-}
-
-.score-tag {
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: bold;
-  color: white;
-}
-
-.highest-tag {
-  background-color: #52c41a;
-}
-
-.lowest-tag {
-  background-color: #ff4d4f;
-}
-
-.user-info-score {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.score-final {
-  font-weight: bold;
-  color: #ff7875;
-}
-
-.score-dimensions {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.user-info-rating-tiem {
-  font-size: 12px;
-  color: #888;
-}
-`;
 
 // 移除动态添加样式的代码，避免服务端渲染问题
 

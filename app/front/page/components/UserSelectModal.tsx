@@ -86,7 +86,11 @@ const UserSelectModal: React.FC<UserSelectModalProps> = ({ visible, onCancel, on
                     key={user.id}
                     hoverable
                     style={{ marginBottom: '12px', cursor: 'pointer' }}
-                    bodyStyle={{ padding: '16px' }}
+                    styles={{
+                      body: {
+                        padding: '16px',
+                      }
+                    }}
                   >
                     <Radio value={user.id} style={{ width: '100%' }}>
                       <div style={{ fontSize: '16px', fontWeight: 500 }}>

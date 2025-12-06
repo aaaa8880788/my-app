@@ -10,34 +10,27 @@ interface PDFViewerProps {
   downloadFileUrl?: string;
 }
 
+// 添加Promise.withResolvers的polyfill
+if (typeof Promise.withResolvers === 'undefined') {
+  (Promise as any).withResolvers = function () {
+    let resolve: any, reject: any;
+    const promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    return { promise, resolve, reject };
+  };
+}
+
+// 设置pdfjs worker
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/legacy/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
+
 const PDFPreview = ({ fileUrl, downloadFileUrl }: PDFViewerProps) => {
   const [numPages, setNumPages] = useState<number>(0);
   const [page, setPage] = useState(1);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    // 确保只在客户端执行
-    setIsClient(true);
-
-    // 添加Promise.withResolvers的polyfill
-    if (typeof Promise.withResolvers === 'undefined') {
-      (Promise as any).withResolvers = function () {
-        let resolve: any, reject: any;
-        const promise = new Promise((res, rej) => {
-          resolve = res;
-          reject = rej;
-        });
-        return { promise, resolve, reject };
-      };
-    }
-
-    // 设置pdfjs worker
-    pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-      'pdfjs-dist/legacy/build/pdf.worker.min.mjs',
-      import.meta.url,
-    ).toString();
-
-  }, []);
 
   const onDocumentLoadSuccess = ({ numPages: nextNumPages }: { numPages: number }) => {
     setNumPages(nextNumPages);
@@ -62,7 +55,7 @@ const PDFPreview = ({ fileUrl, downloadFileUrl }: PDFViewerProps) => {
   };
 
   const handleDownload = () => {
-    if (downloadFileUrl && isClient) {
+    if (downloadFileUrl) {
       try {
         // 创建一个A标签来触发下载，兼容移动端和平板端
         const link = document.createElement('a');
@@ -70,13 +63,13 @@ const PDFPreview = ({ fileUrl, downloadFileUrl }: PDFViewerProps) => {
         link.target = '_blank';
         // 设置download属性可以强制浏览器下载文件而不是打开
         link.download = ''; // 使用默认文件名
-        
+
         // 将A标签添加到DOM中
         document.body.appendChild(link);
-        
+
         // 模拟点击A标签
         link.click();
-        
+
         // 从DOM中移除A标签
         document.body.removeChild(link);
       } catch (error) {
@@ -91,52 +84,48 @@ const PDFPreview = ({ fileUrl, downloadFileUrl }: PDFViewerProps) => {
 
   return (
     <div>
-      {isClient ? (
-        <>
-          <Document
-            file={fileUrl}
-            onLoadSuccess={onDocumentLoadSuccess}
+      <>
+        <Document
+          file={fileUrl}
+          onLoadSuccess={onDocumentLoadSuccess}
+        >
+          <Page
+            pageNumber={page}
+            renderTextLayer={false}
+          />
+        </Document>
+        <div style={{ gap: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Button
+            onClick={handlePreviousPage}
+            disabled={page <= 1}
           >
-            <Page
-              pageNumber={page}
-              renderTextLayer={false}
-            />
-          </Document>
-          <div style={{ gap: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Button
-              onClick={handlePreviousPage}
-              disabled={page <= 1}
-            >
-              上一页
-            </Button>
-            <Button
-              onClick={handleNextPage}
-              disabled={page >= numPages}
-            >
-              下一页
-            </Button>
-            <div>
-              <span>第</span>
-              <InputNumber style={{ width: 150, margin: '0 10px' }} mode='spinner' min={1} max={numPages} defaultValue={page} onChange={handlePageNumberChange} />
-              <span>页</span>
-            </div>
-            <div>
-              <span>共</span>
-              <span>{numPages}</span>
-              <span>页</span>
-            </div>
-            <div>
-              <Button
-                onClick={() => handleDownload()}
-              >
-                下载
-              </Button>
-            </div>
+            上一页
+          </Button>
+          <Button
+            onClick={handleNextPage}
+            disabled={page >= numPages}
+          >
+            下一页
+          </Button>
+          <div>
+            <span>第</span>
+            <InputNumber style={{ width: 150, margin: '0 10px' }} mode='spinner' min={1} max={numPages} defaultValue={page} onChange={handlePageNumberChange} />
+            <span>页</span>
           </div>
-        </>
-      ) : (
-        <div>加载PDF中...</div>
-      )}
+          <div>
+            <span>共</span>
+            <span>{numPages}</span>
+            <span>页</span>
+          </div>
+          <div>
+            <Button
+              onClick={() => handleDownload()}
+            >
+              下载
+            </Button>
+          </div>
+        </div>
+      </>
     </div>
   );
 };
