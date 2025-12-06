@@ -1,0 +1,65 @@
+// 评分对比图表样式
+.rating-chart {
+  margin-top: 32px;
+  padding: 24px;
+  background: white;
+  border-radius: var(--border-radius-xl);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .chart-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 24px;
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: var(--text-secondary);
+
+        .legend-color {
+          width: 16px;
+          height: 16px;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+
+  .chart-container {
+    height: 480px;
+    width: 100%;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    .chart-header {
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+
+      .chart-legend {
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+    }
+  }
+}

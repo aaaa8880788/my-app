@@ -12,7 +12,7 @@ interface RatingCardProps {
 
 export default function RatingCard({ icon, title, description, buttonText, buttonClick }: RatingCardProps) {
   return (
-    <div className="content-wrapper">
+    <div className="rating-card">
       <div className="card-content fade-in">
         <div className="card-body">
           <div className="card-icon">

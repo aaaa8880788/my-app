@@ -1,0 +1,103 @@
+// 评分表格组件样式
+.rating-table {
+  margin-top: 20px;
+
+  .ant-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+
+    &.ant-table-bordered {
+      border: 1px solid var(--border);
+
+      .ant-table-thead > tr > th,
+      .ant-table-tbody > tr > td {
+        border-right: 1px solid var(--border-light);
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .ant-table-thead > tr > th {
+        background: var(--background);
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .ant-table-tbody > tr:last-child > td {
+        border-bottom: 1px solid var(--border-light);
+      }
+    }
+
+    .ant-table-thead > tr > th {
+      padding: 12px 8px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .ant-table-tbody > tr > td {
+      padding: 12px 8px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .ant-table-tbody > tr:hover > td {
+      background: var(--primary-light);
+    }
+
+    .ant-table-pagination {
+      margin-top: 16px;
+      text-align: center;
+    }
+  }
+
+  // 评分表格单元格样式
+  .rating-table-cell {
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+
+  // 评分维度主列标题
+  .rating-dimension-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  // 评分类型子列标题
+  .rating-type-header {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  // 评分值显示
+  .rating-score {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  // 不同分数段的颜色
+  .score-excellent {
+    color: #52c41a;
+  }
+
+  .score-good {
+    color: #faad14;
+  }
+
+  .score-pass {
+    color: #fa8c16;
+  }
+
+  .score-fail {
+    color: #ff4d4f;
+  }
+
+  // 图表容器
+  .rating-chart-container {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+}

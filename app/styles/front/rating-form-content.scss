@@ -1,0 +1,159 @@
+// 评分表单内容组件样式
+.rate-form-content {
+  .rate-form-header {
+    text-align: center;
+    margin-bottom: 32px;
+
+    .text-text-primary {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .text-text-secondary {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+  }
+
+  .rating-items {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .rating-item {
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius-lg);
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: var(--primary);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px);
+      }
+
+      .rating-item-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+
+        .rating-item-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background: var(--primary-light);
+          margin-right: 16px;
+          font-size: 28px;
+        }
+
+        .rating-item-info {
+          flex: 1;
+          text-align: left;
+
+          .rating-item-info-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            font-size: 18px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+          }
+
+          .rating-item-info-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+          }
+        }
+
+      }
+
+      .rating-item-files {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 15px;
+        border-top: 1px solid var(--border-light);
+        border-bottom: 1px solid var(--border-light);
+        margin: 15px 0;
+        text-align: left;
+
+        .rating-item-file {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 10px;
+          padding: 8px 12px;
+          font-size: 14px;
+          color: var(--text-primary);
+          transition: all var(--transition-normal);
+          cursor: pointer;
+
+          &:hover {
+            background: var(--background-hover);
+            transform: translateX(4px);
+          }
+
+          .rating-item-file-arrow {
+            color: var(--text-secondary);
+            font-size: 24px;
+            flex-shrink: 0;
+            transition: color var(--transition-normal);
+          }
+        }
+      }
+
+      .rating-item-score-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .rating-dimension {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 0.75rem;
+          border-radius: var(--border-radius-md);
+          background: rgba(0, 0, 0, 0.02);
+
+          @media (min-width: 768px) {
+            flex-direction: row;
+            align-items: center;
+          }
+
+          .rating-dimension-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            .rating-dimension-name {
+              font-size: 14px;
+              font-weight: 500;
+              color: var(--text-primary);
+            }
+          }
+
+          .rating-dimension-input {
+            flex: 1;
+            height: 44px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}

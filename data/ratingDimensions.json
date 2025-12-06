@@ -1,0 +1,17 @@
+[
+  {
+    "id": "1",
+    "ratingDimensionName": "创新性",
+    "createdAt": "2025/12/5 17:05:07"
+  },
+  {
+    "id": "2",
+    "ratingDimensionName": "专业性",
+    "createdAt": "2025/12/5 17:05:07"
+  },
+  {
+    "id": "3",
+    "ratingDimensionName": "实用性",
+    "createdAt": "2025/12/5 17:05:07"
+  }
+]

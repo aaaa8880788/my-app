@@ -2,219 +2,62 @@
 
 // 基础布局样式
 .admin-page {
+  width: 100%;
+  height: 100%;
+
   // 页面头部
   .page-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 32px;
-    padding-bottom: 16px;
+    box-sizing: border-box;
+    height: 40px;
+    margin-bottom: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  }
 
-  .page-title {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin: 0;
-  }
-
-  // 操作按钮组
-  .action-button {
-    display: flex;
-    gap: 12px;
-    
-    .ant-btn {
-      border-radius: 4px;
-      font-weight: 500;
-      padding: 8px 20px;
-      font-size: 14px;
+    .page-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
     }
   }
 
   // 表格容器
   .table-container {
-    overflow-x: auto;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    padding: 16px;
+    height: calc(100% - 50px);
+    overflow: auto;
+  }
+  // 操作按钮组
+  .action-button {
+    display: flex;
+    gap: 12px;
   }
 
-  // Ant Design 表格样式覆盖
-  .ant-table {
-    border-radius: 8px;
-    overflow: hidden;
-    background: transparent;
+  // 表格中的二维码按钮样式
+  .table-qrcode-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin: 0 auto;
+    width: 32px;
+    height: 32px;
 
-    .ant-table-thead > tr > th {
-      background-color: #fafafa;
-      font-weight: 600;
-      color: var(--text-primary);
-      border-bottom: 1px solid #e8e8e8;
-      padding: 12px 16px;
-      font-size: 14px;
+    canvas {
+      width: 32px !important;
+      height: 32px !important;
     }
 
-    .ant-table-tbody > tr > td {
-      border-bottom: 1px solid #f0f0f0;
-      padding: 12px 16px;
-      font-size: 14px;
-    }
-
-    .ant-table-tbody > tr:hover > td {
-      background-color: #fafafa;
-    }
-
-    .ant-table-pagination {
-      margin-top: 24px;
-      padding-top: 16px;
-      border-top: 1px solid #f0f0f0;
-    }
-  }
-
-  // 表格展开行
-  .expanded-row {
-    padding: 24px 16px;
-    background-color: #fafafa;
-
-    .row-title {
-      font-weight: 600;
-      margin-bottom: 16px;
-      font-size: 16px;
-      color: var(--text-primary);
-    }
-
-    .row-content {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-      margin-bottom: 16px;
-    }
-
-    .info-group {
-      .info-label {
-        font-weight: 500;
-        margin-bottom: 8px;
-        font-size: 14px;
-        color: var(--text-primary);
-      }
-
-      .info-value {
-        font-size: 14px;
-        margin-bottom: 8px;
-        color: var(--text-secondary);
-      }
-    }
-  }
-
-  // 通用模态框样式
-  .modal {
-    .ant-modal-content {
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .ant-modal-header {
-      border-bottom: 1px solid #f0f0f0;
-      padding: 20px 24px;
-    }
-
-    .ant-modal-title {
-      font-weight: 600;
-      font-size: 18px;
-      color: var(--text-primary);
-    }
-
-    .ant-modal-body {
-      padding: 24px;
-    }
-
-    .ant-modal-footer {
-      border-top: 1px solid #f0f0f0;
-      padding: 16px 24px;
-    }
-
-    .ant-form-item {
-      margin-bottom: 20px;
-
-      .ant-form-item-label {
-        label {
-          font-weight: 500;
-          color: var(--text-primary);
-        }
-      }
-
-      .ant-input,
-      .ant-input-textarea {
-        border-radius: 4px;
-        padding: 8px 12px;
-        font-size: 14px;
-      }
-    }
-  }
-
-  // 二维码模态框
-  .qrcode-modal {
-    .ant-modal-content {
-      text-align: center;
-    }
-
-    .ant-modal-body {
-      padding: 32px;
-    }
-
-    .qrcode-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .qrcode-image {
-      margin-bottom: 24px;
-      padding: 16px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .qrcode-info {
-      margin-bottom: 12px;
-      font-size: 14px;
-      color: var(--text-primary);
-    }
-
-    .qrcode-user {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-  }
-
-  // 欢迎页面
-  .welcome-page {
-    .ant-card {
-      max-width: 768px;
-      margin: 32px auto;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      padding: 32px;
-
-      .ant-typography {
-        text-align: center;
-
-        h2 {
-          margin-bottom: 24px;
-          color: var(--text-primary);
-          font-size: 28px;
-        }
-
-        p {
-          color: var(--text-secondary);
-          font-size: 16px;
-        }
-      }
+    &:hover {
+      background: #e9ecef;
+      border-color: #dee2e6;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
   }
 
@@ -306,149 +149,243 @@
   .flex {
     display: flex;
   }
+
   .flex-col {
     flex-direction: column;
   }
+
   .items-center {
     align-items: center;
   }
+
   .justify-center {
     justify-content: center;
   }
+
   .justify-between {
     justify-content: space-between;
   }
-  
+
   // 尺寸类
   .h-2_5 {
     height: 10px;
   }
+
   .w-full {
     width: 100%;
   }
+
   .max-w-4xl {
     max-width: 56rem;
   }
-  
+
   // 间距类
   .mx-auto {
     margin-left: auto;
     margin-right: auto;
   }
+
   .p-2 {
     padding: 8px;
   }
+
   .p-3 {
     padding: 12px;
   }
+
   .p-4 {
     padding: 16px;
   }
+
   .px-4 {
     padding-left: 16px;
     padding-right: 16px;
   }
+
   .py-4 {
     padding-top: 16px;
     padding-bottom: 16px;
   }
+
   .mt-4 {
     margin-top: 16px;
   }
+
   .mb-1 {
     margin-bottom: 4px;
   }
+
   .mb-2 {
     margin-bottom: 8px;
   }
+
   .mb-3 {
     margin-bottom: 12px;
   }
+
   .mb-6 {
     margin-bottom: 24px;
   }
+
   .mr-2 {
     margin-right: 8px;
   }
+
   .gap-2 {
     gap: 8px;
   }
+
   .gap-3 {
     gap: 12px;
   }
-  
+
   // 颜色类
   .bg-gray-200 {
     background-color: #e5e7eb;
   }
+
   .bg-gray-50 {
     background-color: #f9fafb;
   }
+
   .text-center {
     text-align: center;
   }
+
   .text-sm {
     font-size: 14px;
   }
+
   .text-base {
     font-size: 16px;
   }
+
   .text-lg {
     font-size: 18px;
   }
+
   .text-xl {
     font-size: 20px;
   }
+
   .text-green-600 {
     color: #16a34a;
   }
+
   .text-red-600 {
     color: #dc2626;
   }
+
   .text-blue-600 {
     color: #2563eb;
   }
-  
+
   // 字体类
   .font-bold {
     font-weight: 700;
   }
+
   .font-semibold {
     font-weight: 600;
   }
-  
+
   // 边框和圆角类
   .border-b {
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
+
   .rounded-full {
     border-radius: 9999px;
   }
-  
+
   // 动画和过渡类
   .hover-bg-gray-50 {
     transition: background-color 0.2s;
   }
+
   .hover-bg-gray-50:hover {
     background-color: #f9fafb;
   }
-  
+
   // 响应式类（虽然是PC端，但保持兼容性）
   .grid {
     display: grid;
   }
+
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
+
   .space-y-3 {
     gap: 12px;
   }
+
   .space-y-4 {
     gap: 16px;
   }
-  
+
   // 溢出处理
   .overflow-x-auto {
     overflow-x: auto;
   }
+}
+
+
+// 二维码模态框
+.qrcode-modal {
+  position: relative;
+
+  .ant-modal-container {
+    padding: 0;
+
+    .ant-modal-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-bottom: none;
+      padding: 5px;
+      text-align: center;
+
+      .ant-modal-title {
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+      }
+    }
+
+    .ant-modal-body {
+      padding: 10px;
+
+      .qrcode-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 12px;
+
+        .qrcode-image {
+          margin-bottom: 10px;
+          padding: 10px;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          border: 2px solid #e9ecef;
+          width: 100px !important;
+          height: 100px !important;
+        }
+
+        .qrcode-user {
+          font-size: 12px;
+          color: var(--text-secondary);
+          font-weight: 500;
+          padding: 4px 8px;
+          background: rgba(102, 126, 234, 0.1);
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+
+
 }

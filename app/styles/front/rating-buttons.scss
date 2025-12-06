@@ -1,0 +1,77 @@
+// 评分按钮组件样式
+.rating-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+
+  button {
+    margin-right: 16px;
+    min-width: 140px;
+    height: 44px;
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  // 修改评分按钮样式
+  .edit-button, .modify-button {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+
+    &:hover {
+      background-color: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+  }
+
+  // 提交评分按钮样式
+  .submit-button {
+    background-color: var(--success);
+    border-color: var(--success);
+    color: white;
+
+    &:hover {
+      background-color: #389e0d;
+      border-color: #389e0d;
+    }
+  }
+
+  // 保存评分按钮样式
+  .save-button {
+    background-color: var(--warning);
+    border-color: var(--warning);
+    color: white;
+
+    &:hover {
+      background-color: #d48806;
+      border-color: #d48806;
+    }
+  }
+
+  // 取消按钮样式
+  .cancel-button {
+    background-color: white;
+    border-color: var(--border);
+    color: var(--text-primary);
+
+    &:hover {
+      background-color: var(--background);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+  }
+}

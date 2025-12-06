@@ -1,0 +1,119 @@
+// PDF预览组件样式
+.pdf-preview-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  // 加载状态
+  &-loading {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+  
+  // 错误状态
+  &-error {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--error-color);
+    text-align: center;
+    padding: 0 16px;
+  }
+  
+  // Canvas包装器
+  &-canvas-wrapper {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    background-color: #f5f5f5;
+    border-radius: var(--border-radius-md);
+    padding: 8px;
+    
+    // 确保在移动设备上也能良好显示
+    @media (max-width: 768px) {
+      padding: 4px;
+    }
+  }
+  
+  // Canvas元素
+  &-canvas {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    
+    // 确保在移动设备上也能良好显示
+    @media (max-width: 768px) {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  
+  // 控制按钮区域
+  &-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    
+    // 确保在移动设备上也能良好显示
+    @media (max-width: 768px) {
+      gap: 8px;
+      padding: 12px 0;
+    }
+  }
+  
+  // 控制按钮
+  &-button {
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    
+    &:hover:not(:disabled) {
+      background-color: var(--primary-color-hover);
+    }
+    
+    &:disabled {
+      background-color: var(--background-hover);
+      color: var(--text-secondary);
+      cursor: not-allowed;
+    }
+    
+    // 确保在移动设备上也能良好显示
+    @media (max-width: 768px) {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+  }
+  
+  // 页码信息
+  &-page-info {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    
+    // 确保在移动设备上也能良好显示
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
+  }
+}

@@ -1,49 +1,49 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FilePdfOutlined } from '@ant-design/icons';
 
 interface RatingWork {
   id: string;
-  projectName: string;
-  fileName: string;
-  fileUrl: string;
+  title: string;
+  description: string;
+  files: Record<string, any>[];
 }
 
 interface RatingWorksProps {
-  onWorkClick: (work: RatingWork) => void;
+  onWorkClick: (work: Record<string, any>) => void;
 }
 
 export default function RatingWorks({ onWorkClick }: RatingWorksProps) {
-  // 模拟数据 - 实际项目中应该从API获取
-  const [works] = useState<RatingWork[]>([
-    {
-      id: '1',
-      projectName: '项目A',
-      fileName: '年度工作报告.pdf',
-      fileUrl: '/files/annual-report.pdf'
-    },
-    {
-      id: '2',
-      projectName: '项目B',
-      fileName: '产品设计方案.pdf',
-      fileUrl: '/files/product-design.pdf'
-    },
-    {
-      id: '3',
-      projectName: '项目C',
-      fileName: '项目进度报告.pdf',
-      fileUrl: '/files/project-progress.pdf'
-    },
-    {
-      id: '4',
-      projectName: '项目D',
-      fileName: '市场分析报告.pdf',
-      fileUrl: '/files/market-analysis.pdf'
-    }
-  ]);
+  const [works, setWorks] = useState<RatingWork[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleWorkClick = (work: RatingWork) => {
-    onWorkClick(work);
+  // 从API获取可评分作品列表
+  useEffect(() => {
+    const fetchWorks = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/front/works');
+        const data = await response.json();
+        
+        if (data.success) {
+          setWorks(data.data);
+        } else {
+          setError('获取作品列表失败');
+        }
+      } catch (err) {
+        setError('网络错误，请稍后重试');
+        console.error('获取作品列表错误:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWorks();
+  }, []);
+
+  const handleWorkClick = (file: Record<string, any>) => {
+    onWorkClick(file);
   };
 
   return (
@@ -54,24 +54,41 @@ export default function RatingWorks({ onWorkClick }: RatingWorksProps) {
       </div>
       
       <div className="rating-works-list">
-        {works.map((work) => (
-           <div 
-              key={work.id}
-              className="rating-work-item"
-              onClick={() => handleWorkClick(work)}
-            >
-              <div className="rating-work-icon">
-                <FilePdfOutlined className="text-red-500" />
+        {loading ? (
+          <div className="loading">加载中...</div>
+        ) : error ? (
+          <div className="error">{error}</div>
+        ) : works.length === 0 ? (
+          <div className="empty">暂无可评分作品</div>
+        ) : (
+          works.map((work) => (
+             <div 
+                key={work.id}
+                className="rating-work-item"
+              >
+                <div className="rating-work-header">
+                  <div className="rating-work-icon">
+                    <FilePdfOutlined className="text-red-500" />
+                  </div>
+                  <div className="rating-work-main-info">
+                    <div className="rating-work-title">{work.title}</div>
+                    <div className="rating-work-description">{work.description}</div>
+                  </div>
+                  <div className="rating-work-arrow">
+                    →
+                  </div>
+                </div>
+                <div className="rating-work-files">
+                  {work.files.map((file, index) => (
+                    <div key={file.id || index} className="rating-work-file-item" onClick={() => handleWorkClick(file)}>
+                      <FilePdfOutlined className="text-gray-500" style={{ marginRight: '8px' }} />
+                      <span>{file.originalName}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="rating-work-info">
-                <div className="rating-work-name">{work.fileName}</div>
-                <div className="rating-work-hint">所属作品：{work.projectName}</div>
-              </div>
-              <div className="rating-work-arrow">
-                →
-              </div>
-            </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

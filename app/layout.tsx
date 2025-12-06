@@ -1,20 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./styles/main.scss";
 import "antd/dist/reset.css";
-
-// 优化字体加载，使用display: swap确保页面快速渲染
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "评分系统",
@@ -42,16 +29,18 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen overflow-x-hidden`}
+        className="antialiased min-h-screen overflow-x-hidden"
         style={{
           backgroundColor: "var(--background)",
           color: "var(--foreground)",
         }}
       >
+        <Suspense fallback={<div>加载中...</div>}>
         {/* 页面内容容器，确保一致的内边距和最大宽度 */}
-        <div className="container">
-          {children}
-        </div>
+          <div className="container">
+            {children}
+          </div>
+        </Suspense>
       </body>
     </html>
   );
